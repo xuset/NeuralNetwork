@@ -1,5 +1,5 @@
-#ifndef GAME_H_
-#define GAME_H_
+#ifndef Demo_H_
+#define Demo_H_
 
 #include <vector>
 #include "SDL/SDL.h"
@@ -8,11 +8,11 @@
 #include "Collector.h"
 #include "Coin.h"
 
-class Game {
+class Demo {
 	unsigned int ticksPerFrame;
 	unsigned int ticks;
 	unsigned int lastGaEpoch;
-	bool stopGame;
+	bool stopDemo;
 	bool drawFrames;
 	bool aKeyPressed;
 	Display display;
@@ -27,15 +27,15 @@ class Game {
 
 public:
 	const Point dimensions;
-	const Rect gameBoard;
+	const Rect board;
 	unsigned getTicks() { return ticks; }
 	const vector<Collector>& getCollectors() const { return collectors; }
 	const vector<Coin>& getCoins() const { return coins; }
 	const Display& getDisplay() const { return display; }
-	void quit() { stopGame = true; }
+	void quit() { stopDemo = true; }
 	void start();
-	Game();
-	~Game();
+	Demo();
+	~Demo();
 
 };
 

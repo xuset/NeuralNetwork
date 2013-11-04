@@ -1,6 +1,6 @@
 #include <iostream>
 #include "SDL/SDL.h"
-#include "Game.h"
+#include "Demo.h"
 #include "Sprite.h"
 #include "Point.h"
 #include "../NNetwork/GeneticAlg/Chromosome.h"
@@ -17,11 +17,11 @@ using namespace NeuralNetwork;
 
 static GeneticAlg& createGA();
 
-Game::Game() :
+Demo::Demo() :
 		display(SCREEN_WIDTH, SCREEN_HEIGHT),
 		alg(createGA()),
 		dimensions(SCREEN_WIDTH, SCREEN_HEIGHT),
-		gameBoard(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) {
+		board(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) {
 
 	if (display.getInitErrCode() == 1)
 		exit(1);
@@ -30,7 +30,7 @@ Game::Game() :
 	ticksPerFrame = 1;
 	aKeyPressed = false;
 	drawFrames = true;
-	stopGame = false;
+	stopDemo = false;
 	ticks = 0;
 	lastGaEpoch = 0;
 	Sprite::ADD("collector.bmp");
@@ -45,10 +45,10 @@ Game::Game() :
 		coins.push_back(Coin(dimensions));
 }
 
-void Game::start() {
+void Demo::start() {
 	lastGaEpoch = 0;
 	ticks = 0;
-	stopGame = false;
+	stopDemo = false;
 	drawFrames = true;
 
 	for (size_t i = 0; i < collectors.size(); i++)
@@ -59,9 +59,9 @@ void Game::start() {
 	loop();
 }
 
-void Game::loop() {
+void Demo::loop() {
 	unsigned int nextDrawTick = 0;
-	while (!stopGame) {
+	while (!stopDemo) {
 		processEvents();
 		doLogic();
 		if (drawFrames && nextDrawTick < ticks) {
@@ -73,12 +73,12 @@ void Game::loop() {
 	}
 }
 
-void Game::processEvents() {
+void Demo::processEvents() {
 	SDL_Event event;
 	while(SDL_PollEvent(&event)) {
 		switch(event.type) {
 		case SDL_QUIT:
-			stopGame = true;
+			stopDemo = true;
 			break;
 		case SDL_KEYDOWN:
 			if (event.key.keysym.sym == SDLK_a && !aKeyPressed) {
@@ -94,7 +94,7 @@ void Game::processEvents() {
 	}
 }
 
-void Game::draw() {
+void Demo::draw() {
 	display.clear();
 
 	for (size_t i = 0; i < collectors.size(); i++)
@@ -105,7 +105,7 @@ void Game::draw() {
 	display.flip();
 }
 
-void Game::doLogic() {
+void Demo::doLogic() {
 	for (size_t i = 0; i < collectors.size(); i++) {
 		collectors[i].doLogic();
 	}
@@ -125,7 +125,7 @@ void Game::doLogic() {
 	}
 }
 
-Game::~Game() {
+Demo::~Demo() {
 	Sprite::DESTROY_ALL();
 	delete Sprite::sprites;
 }

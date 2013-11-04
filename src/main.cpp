@@ -1,6 +1,6 @@
-#include "game/Game.h"
+#include "Demo/Demo.h"
 
 int main( int argc, char* args[] ) {
-	Game g;
-	g.start();
+	Demo d;
+	d.start();
 }

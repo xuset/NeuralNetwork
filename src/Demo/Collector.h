@@ -7,10 +7,10 @@
 #include "Rect.h"
 
 namespace NeuralNetwork { class Chromosome; }
-class Game;
+class Demo;
 
 class Collector : public Entity {
-	const Game* game;
+	const Demo* demo;
 	vector<Coin>* coins;
 	NeuralNetwork::Chromosome* chromo;
 	Coin* getClosestCoin();
@@ -18,7 +18,7 @@ public:
 	float getFitness() { return chromo->fitness; }
 	void reset();
 	void doLogic();
-	Collector(const Game*, vector<Coin>*, NeuralNetwork::Chromosome*);
+	Collector(const Demo*, vector<Coin>*, NeuralNetwork::Chromosome*);
 	~Collector() { }
 };
 

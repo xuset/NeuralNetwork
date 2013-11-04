@@ -1,5 +1,5 @@
 #include <cmath>
-#include "Game.h"
+#include "Demo.h"
 #include "../NNetwork/GeneticAlg/Chromosome.h"
 #include "Sprite.h"
 #include "Collector.h"
@@ -10,9 +10,9 @@ using namespace NeuralNetwork;
 
 double clampAngle(double);
 
-Collector::Collector(const Game* g, vector<Coin>* _coins, Chromosome* _chromo) :
+Collector::Collector(const Demo* d, vector<Coin>* _coins, Chromosome* _chromo) :
 			Entity(Sprite::GET("collector.bmp")->image, Point(0, 0)),
-			game(g),
+			demo(d),
 			coins(_coins),
 			chromo(_chromo) {
 	angle = getRandomFloat() * 2 * PI;
@@ -51,7 +51,7 @@ void Collector::doLogic() {
 	double moveDistance = (nnOutput[0] + nnOutput[1]);
 	moveForward(moveDistance);
 
-	//if (!game->gameBoard.isInside(getCenter()))
+	//if (!demo->board.isInside(getCenter()))
 	//	moveForward(-1 * distance);
 
 	if (collided(*closest)) {
@@ -63,8 +63,8 @@ void Collector::doLogic() {
 
 void Collector::reset() {
 	angle = getRandomFloat() * 2 * PI;
-	chromo->fitness = 1.0 / game->getCollectors().size();
-	location = Point::RANDOM().scale(game->dimensions);
+	chromo->fitness = 1.0 / demo->getCollectors().size();
+	location = Point::RANDOM().scale(demo->dimensions);
 }
 
 double clampAngle(double a) {
